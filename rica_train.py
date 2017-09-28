@@ -2,16 +2,8 @@ import tensorflow as tf
 import loader
 
 def get_learning_rate(hparams, step):
-  learning_rate = hparams.learning_rate
-  bounds = [hparams.bound_value * (2 ** i) for i in range(10)]
-  for bound in bounds:
-    if step < bound:
-      break
-
-    learning_rate *= 0.5
-    if step == bound:
-      print ("Decreasing rate to: ", learning_rate)
-  return learning_rate
+  """Turn down the learning rate later."""
+  return hparams.learning_rate
 
 def should_plot_basis(hparams, step):
   return step and step % hparams.plot_basis_frequency == 0
@@ -28,10 +20,9 @@ def run_train(hparams, x, x_target, basis_buffer, loss, basis_summaries, summari
   """Train the auto encoder RICA model."""
   learning_rate = tf.placeholder(tf.float32, shape=[])
   optimizer = tf.train.GradientDescentOptimizer(learning_rate)
-  #optimizer = tf.train.GradientDescentOptimizer(learning_rate)
   train = optimizer.minimize(loss)
 
-  synthesis = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='Synthesis')[0]
+  synthesis = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=hparams.synthesis_name)[0]
   norm_s_op = synthesis.assign(tf.nn.l2_normalize(synthesis, dim=1))
 
   saver = tf.train.Saver()
@@ -56,6 +47,7 @@ def run_train(hparams, x, x_target, basis_buffer, loss, basis_summaries, summari
         writer.add_summary(raw_summary, step)
       print ("%d) Loss: %.3f" % (step, raw_loss))
 
+      # Normalize synthesis weights to prevent sparsity degeneracy
       sess.run(norm_s_op)
 
       if step and step % hparams.save_frequency == 0:

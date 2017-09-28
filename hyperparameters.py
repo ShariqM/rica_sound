@@ -10,11 +10,13 @@ class HyperParameters():
   data_source = 'mix'
 
   # Optimization Parameters
-  batch_size = 512
+  batch_size = 0 # XXX FIXME
   max_steps = 2 ** 16
-  Lambda = 0.25  # XXX FIXME
-  learning_rate = 2.0  # XXX FIXME
-  bound_value = 1e5
+  Lambda = 0 # XXX FIXME
+  learning_rate = 0  # XXX FIXME
+
+  # Scope Names
+  synthesis_name = "Synthesis"
 
   # Plotting
   plot_basis_frequency = 100
