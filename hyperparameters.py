@@ -12,9 +12,9 @@ class HyperParameters():
   # Optimization Parameters
   batch_size = 512
   max_steps = 2 ** 16
-  Lambda = 2.1e-1  # XXX FIXME
-  learning_rate = 1.5e-1  # XXX FIXME
-  bound_value = 1500
+  Lambda = 0.25  # XXX FIXME
+  learning_rate = 2.0  # XXX FIXME
+  bound_value = 1e5
 
   # Plotting
   plot_basis_frequency = 100

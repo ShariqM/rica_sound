@@ -4,7 +4,7 @@ import pdb
 from scipy.io import wavfile
 
 def get_wav_files(data_source):
-  base = 'data/lewicki_audiodata'
+  base = 'data'
   if data_source == "mix":
     wf1 = glob.glob('%s/envsounds/*.wav' % base)
     wf2 = glob.glob('%s/mammals/*.wav' % base)

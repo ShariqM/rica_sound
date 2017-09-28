@@ -23,7 +23,7 @@ def setup_tensorboard(logdir):
 
   # Start process, register inside a process group using setsid
   tb_process = subprocess.Popen(
-      ["tensorboard --logdir=%s" % (logdir)],
+      ["tensorboard --logdir=%s --port=54621" % (logdir)],
       shell=True, preexec_fn=os.setsid)
   def kill_tensorboard(*arg):
     print ("*** ||| *** Killing Tensorboard *** ||| ***")
